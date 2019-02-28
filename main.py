@@ -29,7 +29,7 @@ def is_user_exists(username):
 
 
 def get_username_of_participants(who_mentioned_friends_list, who_liked_list, who_following_list):
-    ids_all_participants = set(who_mentioned_friends_list).intersection(set(who_liked_list), set(who_following_list))
+    ids_all_participants = set(who_mentioned_friends_list).intersection(who_liked_list, who_following_list)
     username_all_participants = [bot.get_username_from_user_id(id) for id in ids_all_participants]
     return username_all_participants
 
