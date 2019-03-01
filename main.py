@@ -15,6 +15,8 @@ def get_arguments():
 
 
 def get_mentioned_friends(comment):
+    # Regex for Instagram Username:
+    # https://blog.jstassen.com/2016/03/code-regex-for-instagram-username-and-hashtags/
     pattern = '(?:@)([A-Za-z0-9_](?:(?:[A-Za-z0-9_]|(?:\.(?!\.))){0,28}(?:[A-Za-z0-9_]))?)'
     mentioned_friends = re.findall(pattern, comment)
     return mentioned_friends
