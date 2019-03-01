@@ -22,10 +22,7 @@ def get_mentioned_friends(comment):
 
 def is_user_exists(username):
     user_exists = bot.get_user_id_from_username(username)
-    if user_exists:
-        return True
-    else:
-        return False
+    return user_exists is not None
 
 
 def get_username_of_participants(who_mentioned_friends_list, who_liked_list, who_following_list):
