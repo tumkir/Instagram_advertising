@@ -22,8 +22,8 @@ def get_mentioned_friends(comment):
     return mentioned_friends
 
 
-def get_username_of_participants(who_mentioned_friends_list, who_liked_list, who_following_list):
-    ids_all_participants = set(who_mentioned_friends_list).intersection(who_liked_list, who_following_list)
+def get_username_of_participants(ids_mentioned_friends, ids_likers, ids_followers):
+    ids_all_participants = set(ids_mentioned_friends).intersection(ids_likers, ids_followers)
     username_all_participants = [bot.get_username_from_user_id(id) for id in ids_all_participants]
     return username_all_participants
 
@@ -34,9 +34,9 @@ if __name__ == '__main__':
     bot = Bot()
     bot.login(username=getenv("login"), password=getenv("password"), use_cookie=False)
     id_image = bot.get_media_id_from_link(args.media_url)
-    ids_who_liked = bot.get_media_likers(id_image)
-    ids_who_following = bot.get_user_followers(args.media_owner)
-    ids_who_mentioned_friends = []
+    ids_likers = bot.get_media_likers(id_image)
+    ids_followers = bot.get_user_followers(args.media_owner)
+    ids_mentioned_friends = []
     all_comments = bot.get_media_comments_all(id_image)
     for comment in all_comments:
         mentioned_friends = get_mentioned_friends(comment['text'])
@@ -46,6 +46,6 @@ if __name__ == '__main__':
             id_from_username = bot.get_user_id_from_username(friend)
             if id_from_username is None:
                 continue
-            ids_who_mentioned_friends.append(str(comment['user_id']))
-    all_participants = get_username_of_participants(ids_who_mentioned_friends, ids_who_liked, ids_who_following)
+            ids_mentioned_friends.append(str(comment['user_id']))
+    all_participants = get_username_of_participants(ids_mentioned_friends, ids_likers, ids_followers)
     print(all_participants)
